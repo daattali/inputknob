@@ -1,12 +1,13 @@
 #' @export
 html_dependency_inputknob <- function() {
   list(
-    dependency_shinywc(),
+    shinywc::dependency_shinywc(),
+
     htmltools::htmlDependency(
       name = "input-knob",
       version = "1.0.0",
-      src = "wc/inputknob/lib",
-      package = "shinywc",
+      src = "webcomponent",
+      package = "inputknob",
       script = list(src = "input-knob.js", type = "module")
     )
   )
@@ -39,7 +40,7 @@ inputknob <- function(
   ...
   ) {
 
-  required_params(min, max)
+  shinywc::required_params(min, max)
 
   params <- eval(substitute(alist(...)))
   if (length(params) > 0) {
