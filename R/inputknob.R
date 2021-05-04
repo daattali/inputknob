@@ -1,18 +1,3 @@
-#' @export
-html_dependency_inputknob <- function() {
-  list(
-    shinywc::dependency_shinywc(),
-
-    htmltools::htmlDependency(
-      name = "input-knob",
-      version = "1.0.0",
-      src = "webcomponent",
-      package = "inputknob",
-      script = list(src = "input-knob.js", type = "module")
-    )
-  )
-}
-
 #' Create a `<input-knob>` web component
 #'
 #' Binding to the `<input-knob>` web component version 1.0.0.
@@ -40,6 +25,16 @@ inputknob <- function(
   ...
   ) {
 
+  dependencies <- list(
+    htmltools::htmlDependency(
+      name = "input-knob",
+      version = "1.0.0",
+      src = "webcomponent",
+      package = "inputknob",
+      script = list(src = "input-knob.js", type = "module")
+    )
+  )
+
   params <- as.list(environment())
   params_extra <- eval(substitute(alist(...)))
 
@@ -51,7 +46,8 @@ inputknob <- function(
     required = list("min", "max"),
     events = list("knob-move-change", "knob-move-start", "knob-move-end"),
     slots = list("back-side"),
-    styles = list("--knob-size")
+    styles = list("--knob-size"),
+    dependencies = dependencies
   )
 }
 
