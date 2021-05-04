@@ -10,7 +10,8 @@ Depends:
     R (>= 3.3.0)
 Imports:
     htmltools (>= 0.2.6),
-    shiny
+    shiny,
+    shinywc
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

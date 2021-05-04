@@ -40,63 +40,19 @@ inputknob <- function(
   ...
   ) {
 
-  shinywc::required_params(min, max)
+  params <- as.list(environment())
+  params_extra <- eval(substitute(alist(...)))
 
-  params <- eval(substitute(alist(...)))
-  if (length(params) > 0) {
-    if (is.null(names(params)) || any(names(params) == "")) {
-      stop("inputknob: additional parameters must be named attributes", call. = FALSE)
-    }
-  }
-
-  if (is.null(id)) {
-    id <- paste0('input-knob-', sample(1e9, 1))
-  }
-
-  if (!is.null(slot_back_side)) {
-    if (!inherits(slot_back_side, "shiny.tag")) {
-      stop("input-knob: slot-back-side must be a valid HTML tag", call. = FALSE)
-    }
-    slot_back_side <- shiny::tagAppendAttributes(
-      slot_back_side,
-      slot = "back-side"
-    )
-  }
-
-  style <- NULL
-  if (!is.null(css_knob_size)) {
-    style <- paste0("--", "knob-size", ":", css_knob_size, ";")
-  }
-
-  component_details <- list(
-    name = "input-knob",
+  shinywc::shinywc_ui(
+    tag = "input-knob",
+    params = params,
+    params_extra = params_extra,
     attributes = list("value", "scale", "min", "max"),
-    events = list("knob-move-change", "knob-move-start", "knob-move-end")
+    required = list("min", "max"),
+    events = list("knob-move-change", "knob-move-start", "knob-move-end"),
+    slots = list("back-side"),
+    styles = list("--knob-size")
   )
-  component_details <- jsonlite::toJSON(component_details, auto_unbox = TRUE)
-
-  component_tag <- htmltools::tagList(
-    htmltools::tag(
-      'input-knob',
-      .noWS = c("after-begin", "before-end"),
-      varArgs = list(
-        id = id,
-        value = value,
-        scale = scale,
-        min = min,
-        max = max,
-        slot,
-        slot_back_side,
-        style = style,
-        ...
-      )
-    ),
-    htmltools::singleton(htmltools::tags$head(
-      htmltools::tags$script(sprintf("shinywc.setupComponent(%s)", component_details))
-    )),
-    htmltools::tags$script(sprintf("shinywc.registerComponent('%s', '%s')", "input-knob", id))
-  )
-  htmltools::attachDependencies(component_tag, html_dependency_inputknob())
 }
 
 #' @export
