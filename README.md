@@ -62,7 +62,7 @@ test_ui <- function(id) {
 }
 
 test_server <- function(input, output, session) {
-    knob <- inputknob::InputKnob$new("testknob")
+    knob <- inputknob::inputknob_proxy("testknob")
     
     observeEvent(input$get_attr, {
         fnx <- paste0("get_", input$get_attr_id)
