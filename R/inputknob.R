@@ -69,31 +69,6 @@ Shinywc_inputknob <- R6::R6Class(
       super$listen_event("knob-move-end")
     },
 
-    get_value = function() {
-      super$get_attr("value")
-    },
-    set_value = function(value) {
-      super$set_attr("value", value)
-    },
-    get_scale = function() {
-      super$get_attr("scale")
-    },
-    set_scale = function(value) {
-      super$set_attr("scale", value)
-    },
-    get_min = function() {
-      super$get_attr("min")
-    },
-    set_min = function(value) {
-      super$set_attr("min", value)
-    },
-    get_max = function() {
-      super$get_attr("max")
-    },
-    set_max = function(value) {
-      super$set_attr("max", value)
-    },
-
     get_value_prop = function(cb) {
       super$get_prop("value", cb)
     },
@@ -126,6 +101,25 @@ Shinywc_inputknob <- R6::R6Class(
     call_rotateRight = function(turns) {
       params <- list(turns)
       super$call_method("rotateRight", params)
+    }
+  ),
+
+  active = list(
+    value = function(value) {
+      if (missing(value)) super$get_attr("value")
+      else super$set_attr("value", value)
+    },
+    scale = function(value) {
+      if (missing(value)) super$get_attr("scale")
+      else super$set_attr("scale", value)
+    },
+    min = function(value) {
+      if (missing(value)) super$get_attr("min")
+      else super$set_attr("min", value)
+    },
+    max = function(value) {
+      if (missing(value)) super$get_attr("max")
+      else super$set_attr("max", value)
     }
   )
 )
